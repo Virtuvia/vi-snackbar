@@ -125,11 +125,20 @@ Custom property | Description | Default
         value: false,
         notify: true,
         reflectToAttribute: true
+      },
+
+      /**
+       * Allow user to swipe snackbar away
+       */
+      swipeToDismiss: {
+        type: Boolean,
+        value: false
       }
     },
 
     listeners: {
-      'tap': '_onSnackbarClick'
+      'tap': '_onSnackbarClick',
+      'track': '_handleTrack',
     },
 
     /*
@@ -148,7 +157,27 @@ Custom property | Description | Default
           break;
         }
       }
-    }
+    },
+
+    _handleTrack: function (e) {
+      if (!this.swipeToDismiss || !this.active) {
+        return;
+      }
+
+      var track = e.detail;
+      if (track.state === 'start') {
+        this._swiping = true;
+        return;
+      }
+
+      if (track.state === 'end') {
+        this._swiping = false;
+        if (track.dy > 0) {
+          this.active = false;
+          this.fire('dismiss');
+        }
+      }
+    },
   });
   </script>
 </dom-module>

@@ -47,6 +47,11 @@
       <paper-button snackbar-dismiss>Dismiss</paper-button>
   </vi-snackbar>
 
+  <h3>With swipe</h3>
+  <paper-button raised onclick="showSwipeSnackbar()">Show Snackbar</paper-button>
+
+  <vi-snackbar id="swipeSnack" swipe-to-dismiss>Some alert here</vi-snackbar>
+
   <script>
     function showSnackbar() {
       var snackbar = document.getElementById('snack');
@@ -58,6 +63,11 @@
 
     function showDismissSnackbar() {
       var snackbar = document.getElementById('dismissSnack');
+      snackbar.active = true;
+    }
+
+    function showSwipeSnackbar() {
+      var snackbar = document.getElementById('swipeSnack');
       snackbar.active = true;
     }
   </script>
