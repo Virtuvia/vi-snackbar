@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+  <title>vi-snackbar</title>
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../vi-snackbar.html">
+  <link rel="import" href="../../paper-button/paper-button.html" >
+  <link rel="import" href="../../paper-styles/paper-styles.html" >
+  <link rel="import" href="../../iron-flex-layout/iron-flex-layout.html" >
+
+  <style is="custom-style">
+    html, body {
+      height: 100%;
+    }
+    body {
+      overflow: hidden;
+      margin: 0;
+      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-touch-callout: none;
+    }
+    vi-snackbar paper-button {
+      color: var(--accent-color);
+    }
+  </style>
+
+</head>
+<body>
+
+
+  <h3>Manual control</h3>
+  <paper-button raised onclick="showSnackbar()">Show Snackbar</paper-button>
+
+  <vi-snackbar id="snack">Some alert here</vi-snackbar>
+
+  <h3>With Dismiss</h3>
+  <paper-button raised onclick="showDismissSnackbar()">Show Snackbar</paper-button>
+
+  <vi-snackbar id="dismissSnack">
+      <span>Some alert here</span>
+      <paper-button snackbar-dismiss>Dismiss</paper-button>
+  </vi-snackbar>
+
+  <script>
+    function showSnackbar() {
+      var snackbar = document.getElementById('snack');
+      snackbar.active = true;
+      setTimeout(function () {
+          snackbar.active = false;
+      }, 4000);
+    }
+
+    function showDismissSnackbar() {
+      var snackbar = document.getElementById('dismissSnack');
+      snackbar.active = true;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../paper-styles/typography.html">
+
+<!--
+Material design snackbar
+https://www.google.com/design/spec/components/snackbars-toasts.html
+
+Use the `snackbar-dismiss` attribute on interactive controls to close the snackbar
+in a similar fashion to `dialog-confirm` or `dialog-dismiss`.
+
+Example w/ manual control:
+
+```html
+    <vi-snackbar id="mySnackbar">Save successful!</vi-snackbar>
+    
+    ...
+
+    save: function () {
+        ...
+        this.$.mySnackbar.active = true;
+        this.async(() => {
+            this.$.mySnackbar.active = false;
+        }, 4000);
+    }
+```
+
+Example w/ dismiss:
+
+```html
+    <vi-snackbar id="mySnackbar" active="{{_saveError}}">
+        <span>There was an error during save</span>
+        <paper-button snackbar-dismiss>Dismiss</paper-button>
+    </vi-snackbar>
+
+    ...
+
+    save: function () {
+        ...
+        this._saveError = true;
+    }
+```
+
+### Styling
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--vi-snackbar-active`      | Mixin applied to the snackbar when active | `{}`
+`--vi-snackbar-active-two-line` | Mixin applied to snackbar when active in two-line mode  | `--primary-color`
+
+@demo demo/index.html
+-->
+<dom-module id="vi-snackbar">
+  <style>
+  /* snackbar controls {{{ */
+  :host {
+    @apply(--paper-font-body1);
+    @apply(--layout-horizontal);
+    @apply(--layout-center);
+    background-color: #323232;
+    bottom: 0;
+    color: #fff;
+    height: 0;
+    left: 0;
+    padding: 0 14px;
+    position: fixed;
+    transition: all 200ms ease;
+    width: calc(100% - 24px);
+    z-index: 99;
+  }
+
+  :host([active]) {
+    height: 48px;
+    @apply(--vi-snackbar-active);
+  }
+
+  :host([two-line][active]) {
+    height: 80px;
+    @apply(--vi-snackbar-active-two-line);
+  }
+
+  :host ::content span {
+    display: none;
+  }
+
+  :host([active]) ::content span {
+    @apply(--layout);
+    @apply(--layout-flex);
+  }
+
+  :host ::content paper-button {
+    display: none;
+    margin-left: 24px;
+    margin-right: 0;
+  }
+
+  :host([active]) ::content paper-button {
+    display: block;
+  }
+  </style>
+
+  <template><content></content></template>
+
+  <script>
+  Polymer({
+    is: 'vi-snackbar',
+
+    properties: {
+      /**
+       * Increase the height of the snackbar to allow for two lines of content
+       * a la `paper-item-body`
+       */
+      twoLine: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * true to show the snackbar. To disable the slide up animation
+       * have the snackbar permanently active and use `hidden` instead
+       */
+      active: {
+        type: Boolean,
+        value: false,
+        notify: true,
+        reflectToAttribute: true
+      }
+    },
+
+    listeners: {
+      'tap': '_onSnackbarClick'
+    },
+
+    /*
+    * Will dismiss the snackbar if user clicked on an element with snackbar-dismiss
+    * and update the active state
+    */
+    _onSnackbarClick: function(event) {
+      // Search for the element with dialog-confirm or dialog-dismiss,
+      // from the root target until this (excluded).
+      var path = Polymer.dom(event).path;
+      for (var i = 0; i < path.indexOf(this); i++) {
+        var target = path[i];
+        if (target.hasAttribute && target.hasAttribute('snackbar-dismiss')) {
+          this.active = false;
+          this.fire('dismiss');
+          break;
+        }
+      }
+    }
+  });
+  </script>
+</dom-module>
