@@ -4,6 +4,8 @@
 
 Material Design: [Snackbars](https://www.google.com/design/spec/components/snackbars-toasts.html)
 
+`swipe-to-dismiss` allows the user to swipe the snackbar away
+
 Use the `snackbar-dismiss` attribute on interactive controls to close the snackbar
 in a similar fashion to `dialog-confirm` or `dialog-dismiss`.
 
