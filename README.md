@@ -1,3 +1,5 @@
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/virtuvia/vi-snackbar)
+
 ##&lt;vi-snackbar&gt;##
 
 Material Design: [Snackbars](https://www.google.com/design/spec/components/snackbars-toasts.html)
