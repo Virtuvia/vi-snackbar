@@ -5,6 +5,7 @@
     "main": [
         "vi-snackbar.html"
     ],
+    "license": "MIT",
     "keywords": [
         "web-components",
         "polymer",
